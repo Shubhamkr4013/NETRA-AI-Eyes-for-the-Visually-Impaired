@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Netra</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="sosOverlay" class="sos-overlay">
+  <div class="sos-content">
+    <h1>🚨 EMERGENCY MODE ACTIVATED 🚨</h1>
+    <p>Location guardian ko bheji ja rahi hai...</p>
+  </div>
+</div>
+
+
+
+  <header class="fade-in">
+    <h1>Empowering Vision Through AI</h1>
+    <button id="themeToggle" class="theme-btn">🌙 Toggle Mode</button>
+    <p>Experience your surroundings through intelligent voice guidance. Drishtikon provides real-time object detection and narration for the visually impaired.</p>
+  </header>
+
+  <div class="video-section fade-in">
+    <video id="video" autoplay playsinline></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+  </div>
+
+  <div class="btn-group fade-in">
+    <button id="startBtn">📷 Start Camera</button>
+    <button id="snapshotBtn">📸 Take Snapshot</button>
+    <button id="voiceBtn">🎙 Start Voice Command</button>
+    <button id="manualDetectBtn">🔍 Manual Detect</button>
+    <button id="startAutoDetectBtn">🟢 Start Auto Detect</button>
+    <button id="stopAutoDetectBtn">🔴 Stop Auto Detect</button>
+  </div>
+
+  <div class="output-section fade-in">
+    <p id="output">Voice command output will appear here...</p>
+  </div>
+
+  
+  <div class="footer-heading">
+      <h2>Commands For:</h2>
+  </div>
+  <footer class="fade-in">
+  <div class="footer-section left">
+    <h2> 🔴Snapshot</h2>
+    <ul>
+      <li>🌀 तस्वीर लो</li>
+      <li>🌀 Capture</li>
+      <li>🌀 Snapshot</li>
+    </ul>
+  </div>
+
+  <div class="footer-section left-center">
+    <h2> 🔴Manual Detect</h2>
+    <ul>
+      <li>🗣 Detect</li>
+      <li>🗣 आगे क्या है</li>
+    </ul>
+  </div>
+
+  <div class="footer-section right-center">
+    <h2>🟢Start Auto Detect</h2>
+    <ul>
+      <li>⚡ Start</li>
+      <li>⚡ Auto Detect</li>
+    </ul>
+  </div>
+
+  <div class="footer-section right">
+    <h2>🔴Stop Auto Detect</h2>
+    <ul>
+      <li>📦 Band karo</li>
+      <li>📦 Stop</li>
+      <li>📦 बंद करो</li>
+    </ul>
+  </div>
+
+  
+
+  <div class="footer-section camera">
+  <h2>📷 Camera Switch</h2>
+  <ul>
+    <li>🎥 Back Camera</li>
+    <li>🎥 Front Camera</li>
+    <li>🎥 पीछे का कैमरा</li>
+    <li>🎥 आगे का कैमरा</li>
+  </ul>
+</div>
+</footer>
+  <audio id="sirenSound" src="siren.mp3" preload="auto"></audio>
+  <button id="sosBtn" class="glass-sos">🚨</button>
+  <button id="floatingVoice" class="floating-voice">🎤</button>
+  <script src="script.js"></script>
+</body>
+</html>
