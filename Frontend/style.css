@@ -120,6 +120,7 @@ header p {
   display: flex;
   justify-content: center;
   margin-bottom: 25px;
+  position: relative;   
 }
 
 video {
@@ -336,5 +337,133 @@ body {
   0% { transform: translateX(-5px); }
   50% { transform: translateX(5px); }
   100% { transform: translateX(-5px); }
+}
+
+
+
+
+/* reminder */
+.reminder-circle-container{
+
+position:absolute;
+
+right:15px;
+bottom:15px;
+
+display:none;
+
+z-index:2000;
+
+pointer-events:none;
+
+}
+
+
+.reminder-circle{
+
+position:relative;
+
+width:120px;
+height:120px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+backdrop-filter: blur(10px);
+
+background: rgba(0,0,0,0.4);
+
+border-radius:50%;
+
+box-shadow:0 0 20px rgba(0,0,0,0.6);
+
+}
+
+
+.timer-text{
+
+position:absolute;
+
+font-size:28px;
+font-weight:bold;
+
+color:white;
+
+}
+
+
+.progress-ring-bg{
+
+fill:none;
+
+stroke:rgba(255,255,255,0.2);
+
+stroke-width:8;
+
+}
+
+
+.progress-ring-progress{
+
+fill:none;
+
+stroke:#00ffcc;
+
+stroke-width:8;
+
+stroke-linecap:round;
+
+transform:rotate(-90deg);
+transform-origin:50% 50%;
+
+transition:stroke-dashoffset 1s linear;
+
+}
+
+
+/* last 5 sec alert */
+
+.reminder-danger{
+
+animation:blinkRed 0.5s infinite;
+
+}
+
+@keyframes blinkRed{
+
+0%{box-shadow:0 0 10px red;}
+50%{box-shadow:0 0 30px red;}
+100%{box-shadow:0 0 10px red;}
+
+}
+
+@keyframes dangerBlink{
+
+0%{opacity:1;}
+50%{opacity:0.4;}
+100%{opacity:1;}
+
+}
+
+
+/* camera frame  */
+@media (max-width:768px){
+.reminder-circle-container{
+right:12px;
+bottom:12px;
+transform:scale(0.9);
+}
+}
+
+/*Laptop screen  */
+@media (min-width:769px){
+.reminder-circle-container{
+right:25px;
+bottom:25px;
+transform:scale(1.1);
+
+}
+
 }
 

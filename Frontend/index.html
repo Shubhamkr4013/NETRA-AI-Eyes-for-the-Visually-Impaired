@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  
   <div id="sosOverlay" class="sos-overlay">
   <div class="sos-content">
     <h1>🚨 EMERGENCY MODE ACTIVATED 🚨</h1>
@@ -23,9 +24,27 @@
   </header>
 
   <div class="video-section fade-in">
-    <video id="video" autoplay playsinline></video>
-    <canvas id="canvas" style="display: none;"></canvas>
+
+  <video id="video" autoplay playsinline></video>
+  <canvas id="canvas" style="display: none;"></canvas>
+
+  <!-- Reminder Timer -->
+  <div id="reminderContainer" class="reminder-circle-container">
+
+    <div class="reminder-circle">
+
+      <svg width="120" height="120">
+        <circle class="progress-ring-bg" cx="60" cy="60" r="50"></circle>
+        <circle id="progressRing" class="progress-ring-progress" cx="60" cy="60" r="50"></circle>
+      </svg>
+
+      <div id="timerCount" class="timer-text">0</div>
+
+    </div>
+
   </div>
+
+</div>
 
   <div class="btn-group fade-in">
     <button id="startBtn">📷 Start Camera</button>
@@ -36,6 +55,8 @@
     <button id="stopAutoDetectBtn">🔴 Stop Auto Detect</button>
   </div>
 
+   
+
   <div class="output-section fade-in">
     <p id="output">Voice command output will appear here...</p>
   </div>
@@ -44,62 +65,86 @@
   <div class="footer-heading">
       <h2>Commands For:</h2>
   </div>
-  <footer class="fade-in">
-  <div class="footer-section left">
-    <h2> 🔴Snapshot</h2>
-    <ul>
-      <li>🌀 तस्वीर लो</li>
-      <li>🌀 Capture</li>
-      <li>🌀 Snapshot</li>
-    </ul>
-  </div>
+  <footer class="fade-in"> 
 
   <div class="footer-section left-center">
     <h2> 🔴Manual Detect</h2>
     <ul>
-      <li>🗣 Detect</li>
-      <li>🗣 आगे क्या है</li>
+      <li>🗣️ Detect</li>
+      <li>🗣️ आगे क्या है</li>
     </ul>
   </div>
 
   <div class="footer-section right-center">
     <h2>🟢Start Auto Detect</h2>
     <ul>
-      <li>⚡ Start</li>
-      <li>⚡ Auto Detect</li>
+      <li>🗣️ Start</li>
+      <li>🗣️ Auto Detect</li>
     </ul>
   </div>
 
   <div class="footer-section right">
     <h2>🔴Stop Auto Detect</h2>
     <ul>
-      <li>📦 Band karo</li>
-      <li>📦 Stop</li>
-      <li>📦 बंद करो</li>
+      <li>🗣️ Band karo</li>
+      <li>🗣️ Stop</li>
+      <li>🗣️ बंद करो</li>
     </ul>
   </div>
 
   <div class="footer-section camera">
   <h2>📷 Camera Switch</h2>
   <ul>
-    <li>🎥 Back Camera</li>
-    <li>🎥 Front Camera</li>
-    <li>🎥 पीछे का कैमरा</li>
-    <li>🎥 आगे का कैमरा</li>
+    <li>🗣️ Back Camera</li>
+    <li>🗣️ Front Camera</li>
+    <li>🗣️ पीछे का कैमरा</li>
+    <li>🗣️ आगे का कैमरा</li>
   </ul>
 </div>
 
 <div class="footer-section">
   <h2>🚨Emergency Commands</h2>
   <ul class="command-list">
-    <li>🗣️ "Madad chahiye"</li>
-    <li>🗣️ "Madad karo"</li>
-    <li>🗣️ "मदद चाहिए"</li>
-    <li>🗣️ "मदद करो"</li>
+    <li>🗣️ Madad chahiye</li>
+    <li>🗣️ Madad karo</li>
+    <li>🗣️ मदद चाहिए</li>
+    <li>🗣️ मदद करो</li>
   </ul>
 </div>
 
+ <!-- Memory Commands -->
+  <div class="footer-section">
+    <h2>🧠Memory Commands</h2>
+    <ul class="command-list">
+      <li>🗣️ Pehle kya tha</li>
+      <li>🗣️ Yaha kya tha</li>
+      <li>🗣️ pehle kya dekha</li>
+    </ul>
+  </div>
+
+  <!-- Reminder Commands -->
+<div class="footer-section">
+  <h2>⏰ Reminder</h2>
+  <ul class="command-list">
+    <li>🗣️1 minute ka Reminder laga do</li>
+    <li>🗣️10 second baad yaad dilana</li>
+    <li>🗣️1 minute baad yaad dilana</li>
+  </ul>
+</div>
+
+<div class="footer-section left">
+    <h2> 🔴Snapshot</h2>
+    <ul>
+      <li>🗣️ तस्वीर लो</li>
+      <li>🗣️ Capture</li>
+      <li>🗣️ Snapshot</li>
+    </ul>
+  </div>
+
+
+
 </footer>
+  <audio id="alertSound" src="alert.mp3"></audio>
   <audio id="sirenSound" src="siren.mp3" preload="auto"></audio>
   <button id="sosBtn" class="glass-sos">🚨</button>
   <button id="floatingVoice" class="floating-voice">🎤</button>

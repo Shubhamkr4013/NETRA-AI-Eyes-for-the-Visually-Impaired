@@ -11,6 +11,7 @@ let autoDetectInterval = null;
 let isDetecting = false;
 let currentFacingMode = "environment"; // default back camera
 let currentStream = null;
+let roomMemory = {};
 
 
 //Camera Switch Function
@@ -21,6 +22,7 @@ async function switchCamera(mode) {
     }
 
     currentFacingMode = mode;
+   
 
     const stream = await navigator.mediaDevices.getUserMedia({
       video: {
@@ -193,6 +195,9 @@ function narrateDetection(data) {
     objectDescriptions.push(`ek ${hindiLabel} ${direction} ${distance} meter dur hai`);
   });
 
+  // 🔥 Store detected objects in memory
+   roomMemory = { ...objectCounts };
+
   // Build the count part
   let countParts = [];
   for (const [label, count] of Object.entries(objectCounts)) {
@@ -286,8 +291,30 @@ voiceBtn.addEventListener("click", () => {
     
     console.log("Voice input:", transcript);
     output.innerText = `Aapne kaha: "${transcript}"`;
-    // Camera voice commands
+
+
+    // 🤖 AI Query Mode
 if (
+  transcript.includes("what is") ||
+  transcript.includes("वॉट इज़") ||
+  transcript.includes("explain") ||
+  transcript.includes("एक्सप्लेन ") ||
+  transcript.includes("tell me") ||
+  transcript.includes("batao") ||
+  transcript.includes("samjhao") ||
+  transcript.includes("kya hota hai") ||
+  transcript.includes("ka matlab kya hai") ||
+  transcript.includes("क्या है") ||
+  transcript.includes("समझाओ") ||
+  transcript.includes("बताओ") ||
+  transcript.includes("क्या होता है")
+) {
+  askAI(transcript);
+}
+
+
+    // Camera voice commands
+else if (
     transcript.includes("back camera") ||
     transcript.includes("rear camera") ||
     transcript.includes("पीछे का कैमरा") ||
@@ -329,13 +356,77 @@ else if (
     triggerSOS();
 }
 
+
+
+// Reminder command
+else if (
+transcript.includes("reminder") ||
+transcript.includes("रिमाइंडर ") ||
+transcript.includes("yaad dilana") ||
+transcript.includes("याद दिलाना")
+){
+
+const number = parseInt(transcript);
+
+if(!isNaN(number)){
+
+let seconds;
+
+
+// seconds detection
+if(
+transcript.includes("second") ||
+transcript.includes("seconds") ||
+transcript.includes("sec") ||
+transcript.includes("सेकंड")
+){
+seconds = number;
+}
+
+// minutes detection
+else if(
+transcript.includes("minute") ||
+transcript.includes("minutes") ||
+transcript.includes("मिनट")
+){
+seconds = number * 60;
+}
+
+else{
+
+// default seconds for testing
+seconds = number;
+
+}
+
+speechSynthesis.speak(
+new SpeechSynthesisUtterance("Reminder set ho gaya")
+);
+
+startReminderTimer(seconds);
+
+}
+
+}
+
+
+//memory store call
+else if (
+    transcript.includes("yaha kya tha") ||
+    transcript.includes("pehle kya tha") ||
+    transcript.includes("pehle kya dekha") ||
+    transcript.includes("यहाँ क्या था") ||
+    transcript.includes("पहले क्या देखा") ||
+    transcript.includes("पहले क्या था")
+) {
+    recallMemory();
+}
+
     // One-time detect
     else if (
       
         transcript.includes("detect") ||
-        transcript.includes("kya hai") ||
         transcript.includes("aage kya hai") ||
-        transcript.includes("क्या है") ||
         transcript.includes("डिटेक्ट") ||
         transcript.includes("आगे क्या है")
     ) {
@@ -351,6 +442,8 @@ else if (
         stopAutoDetect();
         recognition.stop();
     }
+
+
     // Start auto detect
     else if (
         transcript.includes("chalu karo") || 
@@ -428,6 +521,12 @@ function showSOS() {
   if (overlay) {
     overlay.style.display = "flex";
   }
+  const siren = document.getElementById("sirenSound");
+
+  if (siren) {
+  siren.currentTime = 0;
+  siren.play();
+  }
 
   // Strong emergency vibration pattern
   if (navigator.vibrate) {
@@ -480,6 +579,11 @@ async function triggerSOS() {
   setTimeout(() => {
     const overlay = document.getElementById("sosOverlay");
     if (overlay) overlay.style.display = "none";
+    const siren = document.getElementById("sirenSound");
+    if (siren) {
+      siren.pause();
+      siren.currentTime = 0;
+      }
   }, 6000);
 }
       else {
@@ -500,4 +604,153 @@ if (sosBtn) {
     e.preventDefault();
     triggerSOS();
   });
+}
+
+
+function recallMemory() {
+
+  if (!roomMemory || Object.keys(roomMemory).length === 0) {
+    const msg = "Abhi tak koi vastu detect nahi hui.";
+    output.innerText = msg;
+
+    const utter = new SpeechSynthesisUtterance(msg);
+    utter.lang = "hi-IN";
+    speechSynthesis.speak(utter);
+    return;
+  }
+
+  let memoryParts = [];
+
+  for (const [label, count] of Object.entries(roomMemory)) {
+    memoryParts.push(`${count} ${label}`);
+  }
+
+  const sentence = `Yaha pehle ${memoryParts.join(", ")} detect hui thi.`;
+
+  output.innerText = sentence;
+
+  const utter = new SpeechSynthesisUtterance(sentence);
+  utter.lang = "hi-IN";
+  speechSynthesis.speak(utter);
+}
+
+
+
+// Reminder Timer System
+let reminderInterval;
+let alertPlayed = false;
+
+function startReminderTimer(seconds){
+
+const container = document.getElementById("reminderContainer");
+const timer = document.getElementById("timerCount");
+
+const alertSound = document.getElementById("alertSound");
+const reminderSound = document.getElementById("reminderSound");
+
+container.style.display = "block";
+timer.innerText = seconds;
+
+alertPlayed = false;
+
+reminderInterval = setInterval(()=>{
+
+seconds--;
+
+timer.innerText = seconds;
+
+
+// 🔴 Last 5 seconds alert
+if(seconds <=5 && seconds >0){
+
+container.classList.add("reminder-danger");
+
+if(!alertPlayed){
+
+alertSound.currentTime = 0;
+alertSound.play();
+
+alertPlayed = true;
+
+}
+
+}
+
+
+// ⏰ Reminder finished
+if(seconds <=0){
+
+clearInterval(reminderInterval);
+
+container.style.display = "none";
+
+container.classList.remove("reminder-danger");
+
+alertPlayed = false;
+
+
+// 🔇 STOP ALERT SOUND
+if(alertSound){
+alertSound.pause();
+alertSound.currentTime = 0;
+}
+
+
+// 🔔 FINAL REMINDER SOUND
+if(reminderSound){
+reminderSound.play();
+}
+
+speechSynthesis.speak(
+new SpeechSynthesisUtterance("Reminder time ho gaya")
+);
+
+}
+
+},1000);
+
+}
+
+
+
+
+// AI Function
+
+async function askAI(question) {
+
+  try {
+
+    output.innerText = "Soch raha hoon...";
+
+    const response = await fetch("http://127.0.0.1:5000/ask-ai", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      
+      body: JSON.stringify({ question })
+    });
+
+    const data = await response.json();
+
+    if (data.answer) {
+
+      output.innerText = data.answer;
+
+      const utter = new SpeechSynthesisUtterance(data.answer);
+      utter.lang = "hi-IN";
+      speechSynthesis.speak(utter);
+
+    } else {
+
+      output.innerText = "AI response nahi mila.";
+
+    }
+
+  } catch (error) {
+
+    console.error("AI Error:", error);
+    output.innerText = "AI server error.";
+
+  }
 }
