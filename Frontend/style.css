@@ -11,12 +11,16 @@ body.light-mode {
   --card: rgba(255, 255, 255, 0.6);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
   padding: 20px;
-  transition: background 0.4s ease, color 0.4s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 /* Animated glowing background */

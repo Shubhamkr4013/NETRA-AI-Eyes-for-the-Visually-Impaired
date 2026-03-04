@@ -105,7 +105,7 @@ async function runDetectionOnce() {
     const formData = new FormData();
     formData.append("image", blob, "frame.jpg");
 
-    const res = await fetch("http://127.0.0.1:5000/detect", {
+    const res = await fetch("http://10.30.229.68:5000/detect", {
       method: "POST",
       body: formData,
     });
@@ -462,7 +462,7 @@ async function triggerSOS() {
     const longitude = position.coords.longitude;
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/sos", {
+      const response = await fetch("http://10.30.229.68:5000/sos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ latitude, longitude })
