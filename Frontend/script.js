@@ -316,8 +316,12 @@ if (
     // Camera voice commands
 else if (
     transcript.includes("back camera") ||
-    transcript.includes("rear camera") ||
+    transcript.includes("बै कैमरा") ||
+    transcript.includes("Front camera") ||
+    transcript.includes("फ्रंट कैमरा") ||
     transcript.includes("पीछे का कैमरा") ||
+    transcript.includes("back camera open") ||
+    transcript.includes("आगे का कमरा") ||
     transcript.includes("back camera open")
 ) {
     switchCamera("environment");
