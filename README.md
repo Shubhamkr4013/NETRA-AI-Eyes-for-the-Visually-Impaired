@@ -1,4 +1,4 @@
-# 👁️ NETRA - AI Vision Assistant
+#  NETRA - AI Vision Assistant
 
 NETRA is an AI-powered smart vision assistant that helps detect objects using YOLOv8 and provides voice alerts.
 
