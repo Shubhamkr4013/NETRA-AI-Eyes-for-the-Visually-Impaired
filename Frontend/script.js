@@ -195,7 +195,7 @@ function narrateDetection(data) {
     objectDescriptions.push(`ek ${hindiLabel} ${direction} ${distance} meter dur hai`);
   });
 
-  // 🔥 Store detected objects in memory
+  //  Store detected objects in memory
    roomMemory = { ...objectCounts };
 
   // Build the count part
@@ -293,7 +293,7 @@ voiceBtn.addEventListener("click", () => {
     output.innerText = `Aapne kaha: "${transcript}"`;
 
 
-    // 🤖 AI Query Mode
+    //  AI Query Mode
 if (
   transcript.includes("what is") ||
   transcript.includes("वॉट इज़") ||
@@ -660,7 +660,7 @@ seconds--;
 timer.innerText = seconds;
 
 
-// 🔴 Last 5 seconds alert
+//  Last 5 seconds alert
 if(seconds <=5 && seconds >0){
 
 container.classList.add("reminder-danger");
@@ -677,7 +677,7 @@ alertPlayed = true;
 }
 
 
-// ⏰ Reminder finished
+//  Reminder finished
 if(seconds <=0){
 
 clearInterval(reminderInterval);
@@ -689,14 +689,14 @@ container.classList.remove("reminder-danger");
 alertPlayed = false;
 
 
-// 🔇 STOP ALERT SOUND
+//  STOP ALERT SOUND
 if(alertSound){
 alertSound.pause();
 alertSound.currentTime = 0;
 }
 
 
-// 🔔 FINAL REMINDER SOUND
+//  FINAL REMINDER SOUND
 if(reminderSound){
 reminderSound.play();
 }
