@@ -15,7 +15,7 @@ const LOCAL_API_URL = "http://10.144.164.68:5000";
 // Example:
 // const PRODUCTION_API_URL = "https://netra-api.onrender.com";
 const PRODUCTION_API_URL =
-  "https://YOUR-NETRA-BACKEND-URL.com";
+  "https://netra-backend-4iq1.onrender.com";
 
 const isLocalHost =
   window.location.hostname === "localhost" ||
